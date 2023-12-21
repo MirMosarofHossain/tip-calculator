@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #484646;
+        }
+
+        body {
+            background-color: rgb(137, 189, 241);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 400px;
+            margin: 100px auto;
+            padding-bottom: 15px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow:
+                inset 0 -3em 3em rgba(200, 205, 200, 0.3),
+                0 0 0 2px rgb(255, 253, 253),
+                0em 0.3em 1em rgba(200, 0, 0, 0.6);
+        }
+
+        header {
+            height: 55px;
+            font-size: 30px;
+            background-color: #004e74;
+            color: #fcf9f9;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .main {
+            width: 90%;
+            margin: auto;
+            font-size: 20px;
+            font-weight: 100;
+        }
+
+        .box {
+            margin-bottom: 27px;
+        }
+
+        .bill_box {
+            margin-top: 50px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input {
+            height: 40px;
+            width: 280px;
+            border-radius: 4px;
+            font-size: 20px;
+        }
+
+        select {
+            height: 40px;
+            display: block;
+            width: 280px;
+            font-size: 20px;
+            margin-left: 35px;
+            border-radius: 4px;
+        }
+
+        option {
+            margin-bottom: 50px;
+        }
+
+        #no_of_person {
+            margin-left: 35px;
+        }
+
+        .cal_box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        button {
+            height: 30px;
+            width: 120px;
+            color: white;
+            background-color: rgb(234, 112, 112);
+            border: none;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            border: 1px solid wheat;
+
+        }
+
+        button:active {
+            background-color: rgb(213, 96, 96);
+        }
+
+        .out_box {
+            text-align: center;
+            margin-bottom: 5px;
+        }
+
+        #footer {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>TIP CALCULATOR</header>
+        <div class="main">
+
+            <div class="bill_box box">
+                <label for="bill_amount">Enter your Bill Amount</label>
+                Rs <input id="bill_amount" type="">
+            </div>
+
+            <div class="box">
+
+                <label for="tip_percent">How was the Service ?</label>
+                <select name="percentage" id="tip_percent">
+                    <option value="20">Excellent - 20 %</option>
+                    <option value="10">Medium - 10 %</option>
+                    <option value="5">Not so good - 5 %</option>
+                </select>
+
+            </div>
+
+            <div class="box">
+                <label for="no_of_person">How many people are sharing the bill ?</label>
+                <input id="no_of_person">
+            </div>
+
+            <div class="box cal_box">
+                <button id="calculate">CALCULATE</button>
+            </div>
+
+            <footer id="footer">
+
+                <div class="out_box box">
+                    <h4>TIP AMOUNT</h4>
+                    <p>Rs : <span id="each_amount"></span></p>
+                    <p>Each</p>
+                </div>
+
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        let billBox = document.getElementById("bill_amount");
+        let selectPercent = document.getElementById("tip_percent");
+        let no_of_person = document.getElementById("no_of_person");
+        let billAmount = 0;
+        let tipPercent = 20;
+        let personNo = 0;
+
+
+        billBox.addEventListener('input', (e) => {
+            if (isNaN(e.target.value * 1)) {
+                document.getElementById("footer").style.display = "none";
+                alert("Error!\nNumber only")
+                if (billAmount) {
+                    e.target.value = billAmount;
+                }
+                else {
+                    e.target.value = "";
+                }
+
+
+            }
+            else {
+                billAmount = e.target.value;
+                console.log((billAmount * 2))
+            }
+
+        })
+
+        selectPercent.addEventListener('click', (e) => {
+            tipPercent = e.target.value;
+            console.log(tipPercent)
+        })
+
+        no_of_person.addEventListener('input', (e) => {
+            if (isNaN(e.target.value * 1)) {
+                document.getElementById("footer").style.display = "none";
+                alert("Error !\nNumber only");
+                if (personNo) {
+                    e.target.value = personNo;
+                }
+                else {
+                    e.target.value = "";
+                }
+
+            }
+            else {
+                personNo = e.target.value;
+            }
+        })
+
+
+        let calBtn = document.getElementById("calculate");
+        let each_amount = document.getElementById("each_amount")
+
+        calBtn.addEventListener('click', () => {
+            if (personNo == 0 || billAmount == 0) {
+                document.getElementById("footer").style.display = "none";
+                alert("Fill the Require value");
+            }
+            else {
+                let amount = (billAmount * tipPercent) / (100 * personNo);
+                document.getElementById("each_amount").innerHTML = amount;
+                document.getElementById("footer").style.display = "block";
+            }
+        })
+
+
+    </script>
+</body>
+
+</html>
